@@ -1,0 +1,33 @@
+version: "3.8"
+
+services:
+
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: dansoldat9@gmail.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "50600:80"
+
+  db:
+    image: postgres:15
+    restart: always
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: test_db
+    ports:
+      - "55555:5432"
+
+  api:
+    build: .
+    restart: always
+    command: bash -c "uvicorn app.main:app --port=8000 --host=0.0.0.0 --reload"
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
