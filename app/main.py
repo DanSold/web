@@ -3,7 +3,7 @@ from fastapi import FastAPI
 app = FastAPI(
     title='Web',
     description='developer -> danKo',
-    version='0.0.1',
+    version='0.0.2',
 )
 
 
